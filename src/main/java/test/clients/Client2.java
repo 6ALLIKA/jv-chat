@@ -6,6 +6,6 @@ public class Client2 {
     public static int port = 8080;
 
     public static void main(String[] args) {
-        new ClientSomthing(ipAddr, port);
+        new ClientSocket(ipAddr, port);
     }
 }

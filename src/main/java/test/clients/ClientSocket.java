@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ClientSomthing {
+public class ClientSocket {
 
     private Socket socket;
     private BufferedReader in;
@@ -22,7 +22,7 @@ public class ClientSomthing {
     private String dtime;
     private SimpleDateFormat dt1;
 
-    public ClientSomthing(String addr, int port) {
+    public ClientSocket(String addr, int port) {
         this.addr = addr;
         this.port = port;
         try {
@@ -38,7 +38,7 @@ public class ClientSomthing {
             new ReadMsg().start();
             new WriteMsg().start();
         } catch (IOException e) {
-            ClientSomthing.this.downService();
+            ClientSocket.this.downService();
         }
     }
 
@@ -76,13 +76,13 @@ public class ClientSomthing {
                 while (true) {
                     str = in.readLine();
                     if (str.equals("stop")) {
-                        ClientSomthing.this.downService();
+                        ClientSocket.this.downService();
                         break;
                     }
                     System.out.println(str);
                 }
             } catch (IOException e) {
-                ClientSomthing.this.downService();
+                ClientSocket.this.downService();
             }
         }
     }
@@ -100,14 +100,14 @@ public class ClientSomthing {
                     userWord = inputUser.readLine();
                     if (userWord.equals("stop")) {
                         out.write("stop" + "\n");
-                        ClientSomthing.this.downService();
+                        ClientSocket.this.downService();
                         break; // выходим из цикла если пришло "stop"
                     } else {
                         out.write("(" + dtime + ") " + nickname + ": " + userWord + "\n");
                     }
                     out.flush();
                 } catch (IOException e) {
-                    ClientSomthing.this.downService();
+                    ClientSocket.this.downService();
                 }
             }
         }

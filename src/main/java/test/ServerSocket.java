@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ServerSomthing extends Thread {
+public class ServerSocket extends Thread {
 
     private Socket socket;
     private BufferedReader in;
@@ -19,7 +19,7 @@ public class ServerSomthing extends Thread {
     private SimpleDateFormat dt1;
     private BufferedReader inputServer;
 
-    public ServerSomthing(Socket socket) throws IOException {
+    public ServerSocket(Socket socket) throws IOException {
         this.socket = socket;
         inputServer = new BufferedReader(new InputStreamReader(System.in));
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -45,7 +45,7 @@ public class ServerSomthing extends Thread {
                     dt1 = new SimpleDateFormat("HH:mm:ss");
                     dtime = dt1.format(time);
                     String serverMsg = inputServer.readLine();
-                    for (ServerSomthing vr : Server.serverList) {
+                    for (ServerSocket vr : Server.serverList) {
                         vr.send("(" + dtime + ") " + "Server" + ": " + serverMsg);
                     }
                     word = in.readLine();
@@ -55,7 +55,7 @@ public class ServerSomthing extends Thread {
                     }
                     System.out.println("Echoing: " + word);
                     Server.story.addStoryEl(word);
-                    for (ServerSomthing vr : Server.serverList) {
+                    for (ServerSocket vr : Server.serverList) {
                         vr.send(word);
                     }
                 }
@@ -82,7 +82,7 @@ public class ServerSomthing extends Thread {
                 socket.close();
                 in.close();
                 out.close();
-                for (ServerSomthing vr : Server.serverList) {
+                for (ServerSocket vr : Server.serverList) {
                     if (vr.equals(this)) {
                         vr.interrupt();
                     }
